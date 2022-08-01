@@ -1,0 +1,26 @@
+{
+  "name": "smart-blinds",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart blind monorepo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chippanfat/smart-blinds.git"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chippanfat/smart-blinds/issues"
+  },
+  "homepage": "https://github.com/chippanfat/smart-blinds#readme",
+  "devDependencies": {
+    "oao": "^2.0.2"
+  }
+}
