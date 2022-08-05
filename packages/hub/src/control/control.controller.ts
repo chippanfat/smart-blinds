@@ -1,5 +1,5 @@
 import { Controller, Patch } from '@nestjs/common';
-import { ControlService } from './control.service';
+import { ControlService } from 'control/control.service';
 
 @Controller('control')
 export class ControlController {
@@ -7,6 +7,6 @@ export class ControlController {
 
   @Patch()
   async update() {
-    await this.controlService.changeDeviceState('', false);
+    await this.controlService.changeDeviceState('living room', true);
   }
 }

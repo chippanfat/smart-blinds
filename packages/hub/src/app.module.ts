@@ -6,10 +6,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost', {
+    MongooseModule.forRoot('mongodb://localhost:27017', {
       dbName: 'smart',
       user: 'root',
-      pass: 'root',
+      pass: 'example',
     }),
     ControlModule,
   ],
