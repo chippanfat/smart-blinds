@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ControlModule } from './control/control.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ScheduleModule } from '@nestjs/schedule';
+import { SchedulerModule } from './scheduler/scheduler.module';
 
 @Module({
   imports: [
@@ -11,7 +13,9 @@ import { MongooseModule } from '@nestjs/mongoose';
       user: 'root',
       pass: 'example',
     }),
+    ScheduleModule.forRoot(),
     ControlModule,
+    SchedulerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

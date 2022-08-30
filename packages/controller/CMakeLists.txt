@@ -12,6 +12,10 @@ set(CMAKE_CXX_COMPILER_WORKS 1)
 
 project("controller" C CXX)
 
+add_library(WiFiNINA INTERFACE)
+target_include_directories(WiFiNINA INTERFACE ./include/WiFiNINA/src)
+target_link_libraries(WiFiNINA PRIVATE WiFiNINA)
+
 include(CMakeListsPrivate.txt)
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/CMakeListsUser.txt)

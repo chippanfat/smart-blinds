@@ -3,10 +3,7 @@ import { AppModule } from './app.module';
 import { MicroserviceOptions } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(
-    AppModule,
-    {logger: ['debug']}
-  );
+  const app = await NestFactory.create(AppModule, { logger: ['debug'] });
   await app.listen(3000);
 }
 bootstrap();
