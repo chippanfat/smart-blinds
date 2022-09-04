@@ -5,8 +5,13 @@ import { ControlService } from 'control/control.service';
 export class ControlController {
   constructor(private readonly controlService: ControlService) {}
 
-  @Patch()
-  async update() {
-    await this.controlService.changeDeviceState('living room', true);
+  @Patch('/device')
+  async updateDevice() {
+    await this.controlService.changeState('living room', true);
+  }
+
+  @Patch('/group')
+  async updateGroup() {
+    await this.controlService.changeGroupState('all', true);
   }
 }

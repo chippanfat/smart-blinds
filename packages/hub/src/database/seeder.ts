@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
 import { DeviceSchema, Device } from '../control/schemas/device.schema';
 import { GroupSchema } from '../control/schemas/group.schema';
+import { SchedulerSchema } from '../scheduler/schemas/scheduler.schema';
+import { SettingsSchema } from '../settings/schemas/settings.schema';
 import { Groups } from '../types/groups.enum';
+import { Settings } from '../types/settings.enum';
 
 mongoose
   .connect('mongodb://localhost:27017', {
@@ -12,23 +15,44 @@ mongoose
   .then((mongoose) => {
     const DeviceModel = mongoose.model('devices', DeviceSchema);
     const GroupModel = mongoose.model('groups', GroupSchema);
+    const SchedulerModel = mongoose.model('schedules', SchedulerSchema);
+    const SettingModel = mongoose.model('settings', SettingsSchema);
 
     const devices: Device[] = [
-      { name: 'living room', address: '192.168.1.35', state: true },
+      { name: 'living room', address: '192.168.1.35', state: false },
+      { name: 'bedroom', address: '192.168.1.36', state: false },
     ];
 
-    devices.forEach((item) => {
-      const device = new DeviceModel(item);
-      device.save().then((result) => {
+    DeviceModel.insertMany(devices).then((result) => {
+      const allGroup = new GroupModel({
+        name: Groups.All,
+        devices: result.map((item) => new mongoose.Types.ObjectId(item._id)),
+      });
 
-        const objectId = new mongoose.Types.ObjectId(result.id);
-        const group = new GroupModel({
-          name: Groups.Downstairs,
-          devices: [objectId],
+      allGroup.save().then((groupResult) => {
+        console.log(groupResult);
+        const schedule = new SchedulerModel({
+          state: false,
+          when: 'daily',
+          datetime: new Date('2020-01-01'),
         });
 
-        group.save().then((result) => {
-          process.exit();
+        schedule.save().then((scheduleResult) => {
+          console.log(scheduleResult);
+          const setting = new SettingModel({
+            name: 'Turn off at Sunset',
+            strategy: Settings.Sunset,
+            enabled: false,
+            devices: {
+              device: [],
+              group: [groupResult._id],
+            },
+          });
+
+          setting.save().then((settingResults) => {
+            console.log(settingResults);
+            process.exit();
+          });
         });
       });
     });

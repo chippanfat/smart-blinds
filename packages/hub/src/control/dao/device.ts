@@ -3,12 +3,15 @@ import { DaoInterface } from 'control/dao/dao.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Device as ControlDevice } from 'control/schemas/device.schema';
+import { Group as ControlGroup } from 'control/schemas/group.schema';
 import InvalidDeviceException from 'control/errors/InvalidDeviceException';
+import InvalidGroupException from 'control/errors/InvalidGroupException';
 
 @Injectable()
 export default class Device implements DaoInterface {
   constructor(
-    @InjectModel('device') private deviceModel: Model<ControlDevice>,
+    @InjectModel('devices') private deviceModel: Model<ControlDevice>,
+    @InjectModel('groups') private groupModel: Model<ControlGroup>,
   ) {}
 
   async getByName(name: string): Promise<ControlDevice> {
@@ -23,5 +26,15 @@ export default class Device implements DaoInterface {
 
   async updateDeviceState(name: string, state: boolean): Promise<void> {
     await this.deviceModel.findOneAndUpdate({ name }, { $set: { state } });
+  }
+
+  async getAllByGroup(name: string): Promise<ControlDevice[]> {
+    const group = await this.groupModel.findOne({ name });
+
+    if (!group) {
+      throw new InvalidGroupException();
+    }
+
+    return this.deviceModel.find({ _id: { $in: group.devices } });
   }
 }

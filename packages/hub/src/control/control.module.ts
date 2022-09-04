@@ -10,8 +10,8 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'device', schema: DeviceSchema },
-      { name: 'group', schema: GroupSchema },
+      { name: 'devices', schema: DeviceSchema },
+      { name: 'groups', schema: GroupSchema },
     ]),
     HttpModule,
   ],

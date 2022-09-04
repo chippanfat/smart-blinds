@@ -5,6 +5,7 @@ import { ControlModule } from './control/control.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
     ScheduleModule.forRoot(),
     ControlModule,
     SchedulerModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
