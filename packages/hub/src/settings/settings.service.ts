@@ -1,18 +1,24 @@
 import { Injectable, Logger } from '@nestjs/common';
+import mongoose from 'mongoose';
 import { Cron } from '@nestjs/schedule';
 import { Settings as SettingsSchema } from 'settings/schemas/settings.schema';
-import {Settings as SettingEnum} from 'types/settings.enum';
+import { Settings as SettingEnum } from 'types/settings.enum';
 import SettingsDao from './dao/settings';
-import Context from "./strategies/context";
-import SunsetStrategy from "./strategies/SunsetStrategy";
+import Context from './strategies/context';
+import SunsetStrategy from './strategies/SunsetStrategy';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class SettingsService {
   private readonly logger = new Logger(SettingsService.name);
 
-  constructor(private readonly settingsDao: SettingsDao) {}
+  constructor(
+    private readonly settingsDao: SettingsDao,
+    private readonly httpClient: HttpService,
+    private readonly sunsetStrategy: SunsetStrategy,
+  ) {}
 
-  @Cron('* * * * *', {
+  @Cron('0 * * * *', {
     name: 'Blind Setting',
     timeZone: 'Europe/London',
   })
@@ -23,18 +29,26 @@ export class SettingsService {
     const enabledSettings = allSettings.filter((setting) => setting.enabled);
 
     for (const setting of enabledSettings) {
-      await this.executeSetting(setting.strategy);
+      this.executeSetting(
+        setting.strategy,
+        setting.devices.group as unknown as mongoose.Types.ObjectId[],
+      );
     }
-
   }
 
-  private async executeSetting(settingStrategy: SettingEnum): Promise<void> {
+  executeSetting(
+    settingStrategy: SettingEnum,
+    groupIds: mongoose.Types.ObjectId[],
+  ): void {
+    const context = new Context();
+
     switch (settingStrategy) {
       case SettingEnum.Sunset:
-        const context = new Context(new SunsetStrategy());
-        await context.run();
+        context.setStrategy(this.sunsetStrategy, groupIds);
         break;
     }
+
+    context.run();
   }
 
   async getAllSettings(): Promise<SettingsSchema[]> {

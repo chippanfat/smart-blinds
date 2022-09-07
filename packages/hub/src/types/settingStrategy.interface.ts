@@ -1,4 +1,7 @@
+import mongoose from 'mongoose';
+
 export interface SettingStrategy {
   name: number;
-  execute: () => void
+  setGroup: (groupIds: mongoose.Types.ObjectId[]) => SettingStrategy;
+  execute: () => void;
 }

@@ -2,6 +2,7 @@ import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import Device from 'control/dao/device';
 import InvalidDeviceException from './errors/InvalidDeviceException';
 import { Device as ControlDevice } from 'control/schemas/device.schema';
+import { Group as ControlGroup } from 'control/schemas/group.schema';
 import { HttpService } from '@nestjs/axios';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class ControlService {
     this.logger.log('device response', { response });
   }
 
-  private async changeDeviceState(
+  public async changeDeviceState(
     device: ControlDevice,
     state: boolean,
   ): Promise<void> {
@@ -54,5 +55,9 @@ export class ControlService {
     for (const device of devices) {
       await this.changeDeviceState(device, state);
     }
+  }
+
+  async getAllDevicesByGroupIds(ids: string[]): Promise<ControlDevice[]> {
+    return await this.deviceDao.getAllDevicesByGroupIds(ids);
   }
 }

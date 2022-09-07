@@ -17,5 +17,6 @@ import { HttpModule } from '@nestjs/axios';
   ],
   controllers: [ControlController],
   providers: [ControlService, Device],
+  exports: [Device],
 })
 export class ControlModule {}

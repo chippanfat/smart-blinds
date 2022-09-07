@@ -1,14 +1,15 @@
-import {SettingStrategy} from "types/settingStrategy.interface";
+import { SettingStrategy } from 'types/settingStrategy.interface';
+import mongoose from 'mongoose';
 
 export default class Context {
-  constructor(private strategy: SettingStrategy) {}
+  private strategy: SettingStrategy;
 
-  setStrategy(strategy: SettingStrategy) {
+  setStrategy(strategy: SettingStrategy, groupIds: mongoose.Types.ObjectId[]) {
     this.strategy = strategy;
+    this.strategy.setGroup(groupIds);
   }
 
-  async run(): Promise<void> {
-    await this.strategy.execute();
+  run(): void {
+    this.strategy.execute();
   }
-
 }

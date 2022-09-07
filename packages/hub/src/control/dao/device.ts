@@ -37,4 +37,17 @@ export default class Device implements DaoInterface {
 
     return this.deviceModel.find({ _id: { $in: group.devices } });
   }
+
+  async getAllDevicesByGroupIds(ids: string[]): Promise<ControlDevice[]> {
+    const groups = await this.groupModel.find({_id: {$in: ids}});
+
+    if (!groups) {
+      throw new InvalidGroupException();
+    }
+
+    const groupDevices = groups.flatMap((group) => group.devices);
+
+    return this.deviceModel.find({_id: {$in: groupDevices}});
+
+  }
 }

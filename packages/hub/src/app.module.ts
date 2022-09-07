@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { FactoryProvider, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ControlModule } from './control/control.module';
@@ -21,5 +21,6 @@ import { SettingsModule } from './settings/settings.module';
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [ControlModule],
 })
 export class AppModule {}

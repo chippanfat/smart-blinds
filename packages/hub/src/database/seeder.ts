@@ -34,7 +34,13 @@ mongoose
         const schedule = new SchedulerModel({
           state: false,
           when: 'daily',
-          datetime: new Date('2020-01-01'),
+          start: new Date('2020-01-01'),
+          last: new Date('2020-01-01'),
+          enabled: true,
+          devices: {
+            device: [],
+            group: [groupResult._id],
+          },
         });
 
         schedule.save().then((scheduleResult) => {
