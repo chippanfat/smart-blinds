@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { DaoInterface } from 'control/dao/dao.interface';
+import { DaoInterface } from 'src/control/dao/dao.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Device as ControlDevice } from 'control/schemas/device.schema';
-import { Group as ControlGroup } from 'control/schemas/group.schema';
-import InvalidDeviceException from 'control/errors/InvalidDeviceException';
-import InvalidGroupException from 'control/errors/InvalidGroupException';
+import { Device as ControlDevice } from 'src/control/schemas/device.schema';
+import { Group as ControlGroup } from 'src/control/schemas/group.schema';
+import InvalidDeviceException from 'src/control/errors/InvalidDeviceException';
+import InvalidGroupException from 'src/control/errors/InvalidGroupException';
 
 @Injectable()
 export default class Device implements DaoInterface {
@@ -39,7 +39,7 @@ export default class Device implements DaoInterface {
   }
 
   async getAllDevicesByGroupIds(ids: string[]): Promise<ControlDevice[]> {
-    const groups = await this.groupModel.find({_id: {$in: ids}});
+    const groups = await this.groupModel.find({ _id: { $in: ids } });
 
     if (!groups) {
       throw new InvalidGroupException();
@@ -47,7 +47,6 @@ export default class Device implements DaoInterface {
 
     const groupDevices = groups.flatMap((group) => group.devices);
 
-    return this.deviceModel.find({_id: {$in: groupDevices}});
-
+    return this.deviceModel.find({ _id: { $in: groupDevices } });
   }
 }

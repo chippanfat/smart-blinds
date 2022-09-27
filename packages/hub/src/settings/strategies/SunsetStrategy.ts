@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Settings } from 'types/settings.enum';
+import { Settings } from 'src/types/settings.enum';
 import { HttpService } from '@nestjs/axios';
-import { ControlService } from 'control/control.service';
-import { SettingStrategy } from 'types/settingStrategy.interface';
-import * as dayjs from 'dayjs'
+import { ControlService } from 'src/control/control.service';
+import { SettingStrategy } from 'src/types/settingStrategy.interface';
+import * as dayjs from 'dayjs';
 import mongoose from 'mongoose';
 
 @Injectable()
@@ -28,9 +28,12 @@ export default class SunsetStrategy implements SettingStrategy {
 
     const [hours, minutes, seconds] = time;
 
-    const fullHour = modifier.toLowerCase() === 'pm' ? parseInt(hours, 10) + 12 : hours;
+    const fullHour =
+      modifier.toLowerCase() === 'pm' ? parseInt(hours, 10) + 12 : hours;
     const fullTime = fullHour.toString().concat(':', minutes, ':', seconds);
-    const currentDateTime = dayjs().format('YYYY-MM-DD').concat('T', fullTime, 'Z');
+    const currentDateTime = dayjs()
+      .format('YYYY-MM-DD')
+      .concat('T', fullTime, 'Z');
 
     return dayjs().isAfter(currentDateTime);
   }
@@ -43,14 +46,16 @@ export default class SunsetStrategy implements SettingStrategy {
     );
 
     response.subscribe(async (sub) => {
-      const devices = await this.controlService.getAllDevicesByGroupIds(this.groupIds.map((item) => item.toString()))
+      const devices = await this.controlService.getAllDevicesByGroupIds(
+        this.groupIds.map((item) => item.toString()),
+      );
 
       if (!this.shouldRunSetting(sub.data.results.sunset)) {
         return;
       }
 
       for (const device of devices) {
-        await this.controlService.changeDeviceState(device, false)
+        await this.controlService.changeDeviceState(device, false);
       }
     });
   }

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DaoInterface } from 'settings/dao/dao.interface';
+import { DaoInterface } from 'src/settings/dao/dao.interface';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Settings as SettingsSchema } from 'settings/schemas/settings.schema';
-import InvalidSettingsException from 'control/errors/InvalidSettingsException';
+import { Settings as SettingsSchema } from 'src/settings/schemas/settings.schema';
+import InvalidSettingsException from 'src/control/errors/InvalidSettingsException';
 
 @Injectable()
 export default class Settings implements DaoInterface {

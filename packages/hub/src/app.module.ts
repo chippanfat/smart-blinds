@@ -1,11 +1,11 @@
-import { FactoryProvider, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ControlModule } from './control/control.module';
+import { Module } from '@nestjs/common';
+import { AppController } from 'src/app.controller';
+import { AppService } from 'src/app.service';
+import { ControlModule } from 'src/control/control.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
-import { SchedulerModule } from './scheduler/scheduler.module';
-import { SettingsModule } from './settings/settings.module';
+import { SchedulerModule } from 'src/scheduler/scheduler.module';
+import { SettingsModule } from 'src/settings/settings.module';
 
 @Module({
   imports: [

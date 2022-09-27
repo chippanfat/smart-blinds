@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { SettingsService } from './settings.service';
-import { Settings as SettingsSchema } from 'settings/schemas/settings.schema';
+import { Settings as SettingsSchema } from 'src/settings/schemas/settings.schema';
 
 @Controller('settings')
 export class SettingsController {

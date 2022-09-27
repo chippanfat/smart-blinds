@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import mongoose from 'mongoose';
 import { Cron } from '@nestjs/schedule';
-import { Settings as SettingsSchema } from 'settings/schemas/settings.schema';
-import { Settings as SettingEnum } from 'types/settings.enum';
+import { Settings as SettingsSchema } from 'src/settings/schemas/settings.schema';
+import { Settings as SettingEnum } from 'src/types/settings.enum';
 import SettingsDao from './dao/settings';
 import Context from './strategies/context';
 import SunsetStrategy from './strategies/SunsetStrategy';

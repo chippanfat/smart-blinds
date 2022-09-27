@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Repeater } from 'types/repeater.type';
+import { Repeater } from 'src/types/repeater.type';
 
 export interface Scheduler {
   state: boolean;
@@ -8,9 +8,10 @@ export interface Scheduler {
   last: Date;
   enabled: boolean;
   devices: {
-    device: string[];
-    group: string[];
+    device: mongoose.Types.ObjectId[];
+    group: mongoose.Types.ObjectId[];
   };
+  name: string;
 }
 
 export const SchedulerSchema = new mongoose.Schema<Scheduler>({
@@ -23,4 +24,5 @@ export const SchedulerSchema = new mongoose.Schema<Scheduler>({
     device: [mongoose.Types.ObjectId],
     group: [mongoose.Types.ObjectId],
   },
+  name: String,
 });

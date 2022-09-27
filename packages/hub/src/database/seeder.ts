@@ -4,6 +4,7 @@ import { GroupSchema } from '../control/schemas/group.schema';
 import { SchedulerSchema } from '../scheduler/schemas/scheduler.schema';
 import { SettingsSchema } from '../settings/schemas/settings.schema';
 import { Groups } from '../types/groups.enum';
+import { Repeater } from '../types/repeater.type';
 import { Settings } from '../types/settings.enum';
 
 mongoose
@@ -33,7 +34,7 @@ mongoose
         console.log(groupResult);
         const schedule = new SchedulerModel({
           state: false,
-          when: 'daily',
+          when: 'daily' as Repeater,
           start: new Date('2020-01-01'),
           last: new Date('2020-01-01'),
           enabled: true,
@@ -41,6 +42,7 @@ mongoose
             device: [],
             group: [groupResult._id],
           },
+          name: 'Turn off devices',
         });
 
         schedule.save().then((scheduleResult) => {

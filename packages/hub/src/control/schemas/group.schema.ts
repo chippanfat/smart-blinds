@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Groups } from 'types/groups.enum';
+import { Groups } from 'src/types/groups.enum';
 
 export interface Group {
   name: Groups;

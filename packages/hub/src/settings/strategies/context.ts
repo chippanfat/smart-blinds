@@ -1,4 +1,4 @@
-import { SettingStrategy } from 'types/settingStrategy.interface';
+import { SettingStrategy } from 'src/types/settingStrategy.interface';
 import mongoose from 'mongoose';
 
 export default class Context {

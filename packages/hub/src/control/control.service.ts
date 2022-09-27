@@ -1,8 +1,8 @@
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import Device from 'control/dao/device';
+import Device from 'src/control/dao/device';
 import InvalidDeviceException from './errors/InvalidDeviceException';
-import { Device as ControlDevice } from 'control/schemas/device.schema';
-import { Group as ControlGroup } from 'control/schemas/group.schema';
+import { Device as ControlDevice } from 'src/control/schemas/device.schema';
+import { Group as ControlGroup } from 'src/control/schemas/group.schema';
 import { HttpService } from '@nestjs/axios';
 
 @Injectable()

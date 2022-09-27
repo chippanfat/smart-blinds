@@ -6,8 +6,8 @@ import Settings from './dao/settings';
 import { SettingsSchema } from './schemas/settings.schema';
 import { HttpModule } from '@nestjs/axios';
 import SunsetStrategy from './strategies/SunsetStrategy';
-import { ControlModule } from 'control/control.module';
-import { ControlService } from 'control/control.service';
+import { ControlModule } from 'src/control/control.module';
+import { ControlService } from 'src/control/control.service';
 
 @Module({
   imports: [

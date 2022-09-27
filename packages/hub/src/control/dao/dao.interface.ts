@@ -1,5 +1,5 @@
-import { Device } from 'control/schemas/device.schema';
-import { Group } from 'control/schemas/group.schema';
+import { Device } from 'src/control/schemas/device.schema';
+import { Group } from 'src/control/schemas/group.schema';
 
 export interface DaoInterface {
   getByName: (name: string) => Promise<Device>;

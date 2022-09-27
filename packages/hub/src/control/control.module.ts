@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ControlController } from 'control/control.controller';
-import { ControlService } from 'control/control.service';
+import { ControlController } from 'src/control/control.controller';
+import { ControlService } from 'src/control/control.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DeviceSchema } from 'control/schemas/device.schema';
-import { GroupSchema } from 'control/schemas/group.schema';
-import Device from 'control/dao/device';
+import { DeviceSchema } from 'src/control/schemas/device.schema';
+import { GroupSchema } from 'src/control/schemas/group.schema';
+import Device from 'src/control/dao/device';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({

@@ -1,5 +1,5 @@
 import { Controller, Patch } from '@nestjs/common';
-import { ControlService } from 'control/control.service';
+import { ControlService } from 'src/control/control.service';
 
 @Controller('control')
 export class ControlController {
