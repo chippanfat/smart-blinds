@@ -3,6 +3,7 @@ import { SchedulerService } from 'src/scheduler/scheduler.service';
 import SchedulerDao from 'src/scheduler/dao/scheduler'
 import { Scheduler as SchedulerInterface } from 'src/scheduler/schemas/scheduler.schema';
 import mongoose from 'mongoose'
+import dayjs from "dayjs";
 
 const offScheduleData: SchedulerInterface = {
   devices: {device: [], group: [new mongoose.Types.ObjectId()]},
@@ -17,6 +18,10 @@ const offScheduleData: SchedulerInterface = {
 const mockSchedulerDao = {
   getAllSchedules: () => Promise.resolve([offScheduleData])
 };
+
+jest.mock("dayjs", () => {
+  return () => jest.requireActual("dayjs")("2020-01-01T00:00:00.000Z");
+});
 
 describe('SchedulerService', () => {
   let service: SchedulerService;

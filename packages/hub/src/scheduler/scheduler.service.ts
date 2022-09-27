@@ -27,7 +27,7 @@ export class SchedulerService {
   async processJob(job: Schedule): Promise<void> {
     const currentDate = dayjs();
 
-    console.log(job);
+    console.log(currentDate);
     // console.log(dayjs(job.last).diff(currentDate, 'minutes'));
     // console.log(dayjs(currentDate).diff(job.last, 'minute'));
   }
