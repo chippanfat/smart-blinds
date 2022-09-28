@@ -9,8 +9,8 @@ const offScheduleData: SchedulerInterface = {
   devices: {device: [], group: [new mongoose.Types.ObjectId()]},
   state: false,
   when: 'daily',
-  start: ' 2022-09-13T00:12:00.000Z' as unknown as Date,
-  last: ' 2022-09-13T00:12:00.000Z' as unknown as Date,
+  start: '2022-09-10T00:00:00' as unknown as Date,
+  last: '2022-09-13T18:31:00' as unknown as Date,
   enabled: true,
   name: 'Turn off devices'
 }
@@ -19,9 +19,14 @@ const mockSchedulerDao = {
   getAllSchedules: () => Promise.resolve([offScheduleData])
 };
 
-jest.mock("dayjs", () => {
-  return () => jest.requireActual("dayjs")("2020-01-01T00:00:00.000Z");
-});
+const mockControlService = {
+
+}
+
+jest.mock("dayjs", () => ({
+  __esModule: true,
+  default: () => jest.requireActual("dayjs")("2022-09-13T18:30:00"),
+}));
 
 describe('SchedulerService', () => {
   let service: SchedulerService;

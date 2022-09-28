@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import SchedulerDao from 'src/scheduler/dao/scheduler';
 import {Scheduler as Schedule} from 'src/scheduler/schemas/scheduler.schema';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class SchedulerService {
@@ -25,11 +25,17 @@ export class SchedulerService {
   }
 
   async processJob(job: Schedule): Promise<void> {
-    const currentDate = dayjs();
 
-    console.log(currentDate);
-    // console.log(dayjs(job.last).diff(currentDate, 'minutes'));
-    // console.log(dayjs(currentDate).diff(job.last, 'minute'));
+    const shouldRun = dayjs().diff(job.last, 'minutes') <= 0;
+    const hasStarted = dayjs().diff(job.start, 'minutes') >= 0;
+
+    if (!shouldRun || !hasStarted) {
+      return;
+    }
+
+
+    // console.log(currentDate.diff(lastRun));
+
   }
 
 }
