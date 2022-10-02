@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import SchedulerDao from 'src/scheduler/dao/scheduler';
 import {Scheduler as Schedule} from 'src/scheduler/schemas/scheduler.schema';
-import dayjs from 'dayjs';
+import dayjs, {ManipulateType} from 'dayjs';
 import {ControlService} from "src/control/control.service";
 
 @Injectable()
@@ -44,9 +44,26 @@ export class SchedulerService {
     }
 
     if (when === 'daily') {
-      const nextRun = dayjs(job.last).add(1, 'day').format('YYYY-MM-DDTHH:mm:ss');
+      const nextRun = this.getNextRunDate(job);
       await this.schedulerDao.updateScheduleLastRun(job._id, nextRun)
     }
+  }
+
+  getNextRunDate(job: Schedule): string {
+    let format: {value: number, unit: ManipulateType} = {value: 1, unit: 'day'};
+    switch (job.when) {
+      case "daily":
+        format = {value: 1, unit: 'day'};
+        break;
+      case "weekly":
+        format = {value: 7, unit: 'day'};
+        break;
+      case "monthly":
+        format = {value: 1, unit: 'month'};
+        break;
+    }
+
+    return dayjs(job.last).add(format.value, format.unit).format('YYYY-MM-DDTHH:mm:ss');
   }
 
 }
