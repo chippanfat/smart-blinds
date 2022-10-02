@@ -60,4 +60,8 @@ export class ControlService {
   async getAllDevicesByGroupIds(ids: string[]): Promise<ControlDevice[]> {
     return await this.deviceDao.getAllDevicesByGroupIds(ids);
   }
+
+  async getGroupsById(id: string[]): Promise<ControlGroup[]> {
+    return await this.deviceDao.getGroupsById(id);
+  }
 }

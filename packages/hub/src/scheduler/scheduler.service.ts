@@ -3,12 +3,13 @@ import { Cron } from '@nestjs/schedule';
 import SchedulerDao from 'src/scheduler/dao/scheduler';
 import {Scheduler as Schedule} from 'src/scheduler/schemas/scheduler.schema';
 import dayjs from 'dayjs';
+import {ControlService} from "src/control/control.service";
 
 @Injectable()
 export class SchedulerService {
   private readonly logger = new Logger(SchedulerService.name);
 
-  constructor(private readonly schedulerDao: SchedulerDao) {}
+  constructor(private readonly schedulerDao: SchedulerDao, private readonly controlService: ControlService) {}
 
   @Cron('* * * * *', {
     name: 'Blind Scheduler',
@@ -29,13 +30,23 @@ export class SchedulerService {
     const shouldRun = dayjs().diff(job.last, 'minutes') <= 0;
     const hasStarted = dayjs().diff(job.start, 'minutes') >= 0;
 
-    if (!shouldRun || !hasStarted) {
+    const {enabled, devices, when, state} = job;
+
+    if ((!shouldRun || !hasStarted) || !enabled) {
+      this.logger.log('Job should not run', {name: job.name, conditions: {shouldRun, hasStarted, enabled: job.enabled}})
       return;
     }
 
+    const groups = await this.controlService.getGroupsById(devices.group.map((item) => item.toString()))
 
-    // console.log(currentDate.diff(lastRun));
+    for (const group of groups) {
+      await this.controlService.changeGroupState(group.name, state);
+    }
 
+    if (when === 'daily') {
+      const nextRun = dayjs(job.last).add(1, 'day').format('YYYY-MM-DDTHH:mm:ss');
+      await this.schedulerDao.updateScheduleLastRun(job._id, nextRun)
+    }
   }
 
 }

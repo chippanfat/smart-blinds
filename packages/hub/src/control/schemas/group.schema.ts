@@ -3,7 +3,7 @@ import { Groups } from 'src/types/groups.enum';
 
 export interface Group {
   name: Groups;
-  devices: string[];
+  devices: mongoose.Types.ObjectId[];
 }
 
 export const GroupSchema = new mongoose.Schema<Group>({

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Repeater } from 'src/types/repeater.type';
 
 export interface Scheduler {
+  _id: mongoose.Types.ObjectId;
   state: boolean;
   when: Repeater;
   start: Date;
