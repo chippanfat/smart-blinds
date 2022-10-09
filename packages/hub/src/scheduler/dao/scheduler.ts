@@ -14,7 +14,10 @@ export default class Scheduler implements SchedulerInterface {
     return this.schedulerModel.find({ enabled: true });
   }
 
-  async updateScheduleLastRun(id: mongoose.Types.ObjectId, date: string | Date): Promise<void> {
-    await this.schedulerModel.updateOne({_id: id}, {last: date});
+  async updateScheduleLastRun(
+    id: mongoose.Types.ObjectId,
+    date: string | Date,
+  ): Promise<void> {
+    await this.schedulerModel.updateOne({ _id: id }, { last: date });
   }
 }
