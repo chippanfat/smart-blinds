@@ -5,7 +5,7 @@ services:
   mongo:
     container_name: smart-blind-mongo
     image: mongo:5.0.9
-    restart: always
+    restart: on-failure
     ports:
       - "27017:27017"
     environment:
@@ -14,6 +14,27 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongo:/data/db
+    networks:
+      - blinds
+
+  queue:
+    container_name: smart-blind-queue
+    image: rabbitmq:3.11.1-alpine
+    restart: on-failure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: example
+    volumes:
+      - queue:/var/lib/rabbitmq
+    networks:
+      - blinds
 
 volumes:
   mongo:
+  queue:
+
+networks:
+  blinds:
