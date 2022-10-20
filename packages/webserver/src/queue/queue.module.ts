@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { QueueService } from './queue.service';
-import { Tokens } from '../types/tokens.enum';
+import { QueueService } from 'src/queue/queue.service';
+import { Tokens } from 'src/types/tokens.enum';
 
 @Module({
   imports: [
@@ -9,7 +9,13 @@ import { Tokens } from '../types/tokens.enum';
       {
         name: Tokens.RabbitMQ,
         transport: Transport.RMQ,
-        options: { urls: ['amqp://localhost'], queue: 'smart-blinds-queue' },
+        options: {
+          urls: ['amqp://root:example@localhost:5672'],
+          queue: 'blinds_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
       },
     ]),
   ],
