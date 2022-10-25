@@ -11,10 +11,10 @@ export default function Device({
 
   return (
     <div className="inline-flex items-center flex-grow mt-6 text-left sm:mt-0">
-      <span className="pr-12 text-xs font-semibold tracking-widest text-blue-600 uppercase hover:text-neutral-600">
+      <span className="pr-12 text-xs font-semibold tracking-widest uppercase hover:text-neutral-600">
         {label}
       </span>
-      <span className="ml-auto text-blue-600 hover:text-neutral-600">
+      <span className="ml-auto hover:text-neutral-600">
         <label className="inline-flex relative items-center cursor-pointer">
           <input
             type="checkbox"

@@ -12,13 +12,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="mb-8 text-4xl md:text-6xl font-bold leading-tight tracking-tighter text-neutral-800">
-        Devices
+        Groups
       </div>
       <ListItem>
-        <Device key="livingroom" label="Living Room" state={false} />
+        <Device key="livingroom" label="Upstairs" state={false} />
       </ListItem>
       <ListItem>
-        <Device key="bedroom" label="Bedroom" state={true} />
+        <Device key="bedroom" label="Downstairs" state={true} />
       </ListItem>
     </>
   );

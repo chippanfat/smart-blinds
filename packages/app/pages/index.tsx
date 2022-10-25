@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Device from "app/components/Device";
-import DeviceListWrapper from "app/components/DeviceListWrapper";
+import Device from "app/components/device";
+import DeviceListWrapper from "app/components/deviceListWrapper";
 
 const Home: NextPage = () => {
   return (
