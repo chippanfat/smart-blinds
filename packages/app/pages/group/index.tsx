@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Device from "app/components/device";
-import ListItem from "app/components/listItem";
+import Device from "app/components/Device";
+import ListItem from "app/components/ListItem";
+import ListOpenIcon from "app/components/ListOpenIcon";
+import DeviceGroupModal from "app/components/DeviceGroupModal";
 
 const Home: NextPage = () => {
   return (
@@ -15,11 +17,12 @@ const Home: NextPage = () => {
         Groups
       </div>
       <ListItem>
-        <Device key="livingroom" label="Upstairs" state={false} />
+        <Device key="livingroom" label="Upstairs" action={<ListOpenIcon />} />
       </ListItem>
       <ListItem>
-        <Device key="bedroom" label="Downstairs" state={true} />
+        <Device key="bedroom" label="Downstairs" action={<ListOpenIcon />} />
       </ListItem>
+      <DeviceGroupModal isOpen={false} />
     </>
   );
 };

@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Device from "app/components/device";
-import DeviceListWrapper from "app/components/deviceListWrapper";
+import Device from "app/components/Device";
+import DeviceListWrapper from "app/components/ListItem";
+import Toggle from "app/components/Toggle";
 
 const Home: NextPage = () => {
   return (
@@ -15,10 +16,22 @@ const Home: NextPage = () => {
         Devices
       </div>
       <DeviceListWrapper>
-        <Device key="livingroom" label="Living Room" state={false} />
+        <Device
+          key="livingroom"
+          label="Living Room"
+          action={
+            <Toggle
+              id=""
+              state
+              onChange={() => {
+                console.log("vv");
+              }}
+            />
+          }
+        />
       </DeviceListWrapper>
       <DeviceListWrapper>
-        <Device key="bedroom" label="Bedroom" state={true} />
+        <Device key="bedroom" label="Bedroom" />
       </DeviceListWrapper>
     </>
   );
