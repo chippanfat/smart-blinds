@@ -1,11 +1,14 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
 import ListItem from "app/components/ListItem";
-import ListOpenIcon from "app/components/ListOpenIcon";
+import ListOpenButton from "app/components/ListOpenButton";
 import DeviceGroupModal from "app/components/DeviceGroupModal";
 
 const Home: NextPage = () => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
   return (
     <>
       <Head>
@@ -17,12 +20,36 @@ const Home: NextPage = () => {
         Groups
       </div>
       <ListItem>
-        <Device key="livingroom" label="Upstairs" action={<ListOpenIcon />} />
+        <Device
+          key="livingroom"
+          label="Upstairs"
+          action={
+            <ListOpenButton
+              onClick={() => {
+                setOpenModal(true);
+              }}
+            />
+          }
+        />
       </ListItem>
       <ListItem>
-        <Device key="bedroom" label="Downstairs" action={<ListOpenIcon />} />
+        <Device
+          key="bedroom"
+          label="Downstairs"
+          action={
+            <ListOpenButton
+              onClick={() => {
+                setOpenModal(true);
+              }}
+            />
+          }
+        />
       </ListItem>
-      <DeviceGroupModal isOpen={false} />
+      <DeviceGroupModal
+        isOpen={openModal}
+        onClose={() => setOpenModal(false)}
+        onSave={() => setOpenModal(false)}
+      />
     </>
   );
 };
