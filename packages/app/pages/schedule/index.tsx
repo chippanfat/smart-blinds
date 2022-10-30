@@ -4,9 +4,9 @@ import Head from "next/head";
 import Device from "app/components/Device";
 import ListItem from "app/components/DeviceListWrapper";
 import ListOpenButton from "app/components/ListOpenButton";
-import DeviceGroupModal from "app/components/DeviceGroupModal";
+import ChangeScheduleModal from "app/components/ChangeScheduleModal";
 
-const Group: NextPage = () => {
+const Schedule: NextPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   return (
@@ -17,12 +17,12 @@ const Group: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="mb-8 text-4xl md:text-6xl font-bold leading-tight tracking-tighter text-neutral-800">
-        Groups
+        Schedule
       </div>
       <ListItem>
         <Device
           key="livingroom"
-          label="Upstairs"
+          label="Turn off devices"
           action={
             <ListOpenButton
               onClick={() => {
@@ -32,27 +32,12 @@ const Group: NextPage = () => {
           }
         />
       </ListItem>
-      <ListItem>
-        <Device
-          key="bedroom"
-          label="Downstairs"
-          action={
-            <ListOpenButton
-              onClick={() => {
-                setOpenModal(true);
-              }}
-            />
-          }
-        />
-      </ListItem>
-      <DeviceGroupModal
+      <ChangeScheduleModal
         openModal={openModal}
-        onClose={() => {
-          setOpenModal(false);
-        }}
+        onClose={() => setOpenModal(false)}
       />
     </>
   );
 };
 
-export default Group;
+export default Schedule;
