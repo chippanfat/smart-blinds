@@ -1,5 +1,5 @@
 import React, { createElement, Fragment, ReactElement } from "react";
-import { Image } from "next/image";
+import Image from "next/image";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
