@@ -1,4 +1,5 @@
 import React, { createElement, Fragment, ReactElement } from "react";
+import { Image } from "next/image";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -79,7 +80,7 @@ export default function nav(): ReactElement {
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <a href="#">
               <span className="sr-only">Blndr</span>
-              <img
+              <Image
                 className="h-8 w-auto sm:h-10"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
@@ -118,7 +119,7 @@ export default function nav(): ReactElement {
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <img
+                  <Image
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt="Your Company"
