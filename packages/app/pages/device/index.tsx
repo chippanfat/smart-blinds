@@ -4,7 +4,7 @@ import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
 import Toggle from "app/components/Toggle";
 
-const Device: NextPage = () => {
+const DevicePage: NextPage = () => {
   return (
     <>
       <Head>
@@ -49,4 +49,4 @@ const Device: NextPage = () => {
   );
 };
 
-export default Device;
+export default DevicePage;
