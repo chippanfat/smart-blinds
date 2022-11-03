@@ -59,16 +59,18 @@ export default function DeviceGroupModal({
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div className="mt-3 mt-2 text-left">
                       <Dialog.Title
                         as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
+                        className="text-lg font-medium leading-6 text-gray-900 text-center"
                       >
                         {title}
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">{description}</p>
-                        {children}
+                        <p className="text-sm text-gray-500 text-center">
+                          {description}
+                        </p>
+                        <div className="mt-4">{children}</div>
                       </div>
                     </div>
                   </div>

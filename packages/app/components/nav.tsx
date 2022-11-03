@@ -10,6 +10,8 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
+import Logo from "app/images/yadalogo.jpg";
+
 const naviItems = new Map([
   ["devices", { name: "Devices", href: "/device", icon: DeviceTabletIcon }],
   ["groups", { name: "Groups", href: "/group", icon: QueueListIcon }],
@@ -82,8 +84,10 @@ export default function nav(): ReactElement {
               <span className="sr-only">Blndr</span>
               <Image
                 className="h-8 w-auto sm:h-10"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
+                src={Logo}
+                alt="Yada Yada Logo"
+                width={48}
+                height={48}
               />
             </a>
           </div>
@@ -121,8 +125,10 @@ export default function nav(): ReactElement {
                 <div>
                   <Image
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
+                    src={Logo}
+                    alt="Yada Yada Logo"
+                    width={48}
+                    height={48}
                   />
                 </div>
                 <div className="-mr-2">
