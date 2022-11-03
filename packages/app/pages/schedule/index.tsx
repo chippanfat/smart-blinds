@@ -23,6 +23,12 @@ const Schedule: NextPage = () => {
         <Device
           key="livingroom"
           label="Turn off devices"
+          subLabel={
+            <>
+              <span className="uppercase">Last Run: </span>
+              <span>Just Now</span>{" "}
+            </>
+          }
           action={
             <ListOpenButton
               onClick={() => {
