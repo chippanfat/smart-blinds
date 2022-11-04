@@ -8,6 +8,7 @@ import {
   DeviceTabletIcon,
   QueueListIcon,
   XMarkIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 
 import Logo from "app/images/yadalogo.jpg";
@@ -17,6 +18,7 @@ const naviItems = new Map([
   ["groups", { name: "Groups", href: "/group", icon: QueueListIcon }],
   ["schedules", { name: "Schedules", href: "/schedule", icon: ClockIcon }],
   ["settings", { name: "Settings", href: "/settings", icon: Cog6ToothIcon }],
+  ["auth", { name: "", href: "/register", icon: UserIcon }],
 ]);
 
 function RenderMobileNavBarItem({ navKey }: { navKey: string }): ReactElement {
@@ -102,6 +104,7 @@ export default function nav(): ReactElement {
             <RenderNavBarItem navKey="groups" />
             <RenderNavBarItem navKey="schedules" />
             <RenderNavBarItem navKey="settings" />
+            <RenderNavBarItem navKey="auth" />
           </div>
         </div>
       </div>
@@ -144,6 +147,7 @@ export default function nav(): ReactElement {
                   <RenderMobileNavBarItem navKey="groups" />
                   <RenderMobileNavBarItem navKey="schedules" />
                   <RenderMobileNavBarItem navKey="settings" />
+                  <RenderMobileNavBarItem navKey="auth" />
                 </nav>
               </div>
             </div>
