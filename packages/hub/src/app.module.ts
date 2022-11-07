@@ -10,11 +10,14 @@ import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017', {
-      dbName: 'smart',
-      user: 'root',
-      pass: 'example',
-    }),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,
+      {
+        dbName: process.env.DB_DATABASE,
+        user: process.env.DB_USERNAME,
+        pass: process.env.DB_PASSWORD,
+      },
+    ),
     ScheduleModule.forRoot(),
     ControlModule,
     SchedulerModule,
