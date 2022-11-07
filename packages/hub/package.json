@@ -22,8 +22,10 @@
     "seed": "ts-node src/database/seeder.ts"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.4.6",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.0.7",
     "@nestjs/mongoose": "^9.2.0",

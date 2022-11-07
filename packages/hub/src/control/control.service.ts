@@ -26,6 +26,10 @@ export class ControlService {
     this.logger.log('device response', { response });
   }
 
+  public async getAllDevices(): Promise<ControlDevice[]> {
+    return await this.deviceDao.getAllDevices();
+  }
+
   public async changeDeviceState(
     device: ControlDevice,
     state: boolean,

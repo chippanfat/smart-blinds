@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { SchedulerModule } from 'src/scheduler/scheduler.module';
 import { SettingsModule } from 'src/settings/settings.module';
+import { ConfigModule } from 'src/config/config.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SettingsModule } from 'src/settings/settings.module';
     ControlModule,
     SchedulerModule,
     SettingsModule,
+    ConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],

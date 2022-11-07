@@ -14,6 +14,10 @@ export default class Device implements DaoInterface {
     @InjectModel('groups') private groupModel: Model<ControlGroup>,
   ) {}
 
+  async getAllDevices(): Promise<ControlDevice[]> {
+    return this.deviceModel.find();
+  }
+
   async getByName(name: string): Promise<ControlDevice> {
     const device = await this.deviceModel.findOne({ name });
 

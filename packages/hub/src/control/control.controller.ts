@@ -1,9 +1,14 @@
-import { Controller, Patch } from '@nestjs/common';
+import { Controller, Get, Patch } from '@nestjs/common';
 import { ControlService } from 'src/control/control.service';
 
 @Controller('control')
 export class ControlController {
   constructor(private readonly controlService: ControlService) {}
+
+  @Get('/devices')
+  async getAllDevices() {
+    return await this.controlService.getAllDevices();
+  }
 
   @Patch('/device')
   async updateDevice() {
