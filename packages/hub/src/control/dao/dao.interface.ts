@@ -1,5 +1,4 @@
 import { Device } from 'src/control/schemas/device.schema';
-import { Group } from 'src/control/schemas/group.schema';
 
 export interface DaoInterface {
   getAllDevices: () => Promise<Device[]>;

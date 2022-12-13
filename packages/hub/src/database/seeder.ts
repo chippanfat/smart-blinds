@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { DeviceSchema, Device } from '../control/schemas/device.schema';
-import { GroupSchema } from '../control/schemas/group.schema';
+import { GroupSchema } from '../groups/schemas/group.schema';
 import { SchedulerSchema } from '../scheduler/schemas/scheduler.schema';
 import { SettingsSchema } from '../settings/schemas/settings.schema';
 import { Groups } from '../types/groups.enum';

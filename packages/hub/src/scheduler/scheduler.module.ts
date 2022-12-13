@@ -7,7 +7,7 @@ import SchedulerDao from 'src/scheduler/dao/scheduler';
 import { ControlService } from 'src/control/control.service';
 import DeviceDao from 'src/control/dao/device';
 import { DeviceSchema } from 'src/control/schemas/device.schema';
-import { GroupSchema } from 'src/control/schemas/group.schema';
+import { GroupSchema } from 'src/groups/schemas/group.schema';
 
 @Module({
   imports: [
