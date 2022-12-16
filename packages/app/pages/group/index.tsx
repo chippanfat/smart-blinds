@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
@@ -6,9 +6,52 @@ import ListItem from "app/components/DeviceListWrapper";
 import ListOpenButton from "app/components/ListOpenButton";
 import DeviceGroupModal from "app/components/DeviceGroupModal";
 import PageTitle from "app/components/PageTitle";
+import { useGetGroups } from "app/hooks/useGetGroups";
+import { useGetDevices } from "app/hooks/useGetDevices";
+import { Group } from "app/types/Group.interface";
 
 const Group: NextPage = () => {
+  const groups = useGetGroups();
+  const devices = useGetDevices();
+
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [currentGroup, setCurrentGroup] = useState<Group | undefined>(
+    undefined
+  );
+
+  function RenderGroupList() {
+    if (!groups.data) {
+      return <h1>Loading</h1>;
+    }
+
+    const list = groups.data.map((group) => (
+      <ListItem key={`list-group-${group._id}`}>
+        <Device
+          key={`group-${group._id}`}
+          label={group.name}
+          action={
+            <ListOpenButton
+              onClick={() => {
+                setCurrentGroup(group);
+                setOpenModal(true);
+              }}
+            />
+          }
+        />
+      </ListItem>
+    ));
+
+    return <>{list}</>;
+  }
+
+  function CheckGroupSet({
+    children,
+  }: {
+    children: ReactElement;
+  }): ReactElement | null {
+    // Throw an actual error/toast/alert instead of null
+    return !currentGroup ? null : children;
+  }
 
   return (
     <>
@@ -18,38 +61,22 @@ const Group: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageTitle>Groups</PageTitle>
-      <ListItem>
-        <Device
-          key="livingroom"
-          label="Upstairs"
-          action={
-            <ListOpenButton
-              onClick={() => {
-                setOpenModal(true);
-              }}
-            />
-          }
+
+      <RenderGroupList />
+
+      <CheckGroupSet>
+        <DeviceGroupModal
+          openModal={openModal}
+          allDevices={devices.data || []}
+          currentGroup={currentGroup as Group}
+          onSave={(groupId, deviceIds) => {
+            setOpenModal(false);
+          }}
+          onClose={() => {
+            setOpenModal(false);
+          }}
         />
-      </ListItem>
-      <ListItem>
-        <Device
-          key="bedroom"
-          label="Downstairs"
-          action={
-            <ListOpenButton
-              onClick={() => {
-                setOpenModal(true);
-              }}
-            />
-          }
-        />
-      </ListItem>
-      <DeviceGroupModal
-        openModal={openModal}
-        onClose={() => {
-          setOpenModal(false);
-        }}
-      />
+      </CheckGroupSet>
     </>
   );
 };

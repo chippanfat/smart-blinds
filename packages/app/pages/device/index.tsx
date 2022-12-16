@@ -5,10 +5,10 @@ import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
 import Toggle from "app/components/Toggle";
 import PageTitle from "app/components/PageTitle";
-import { useDevice } from "app/hooks/getDevices";
+import { useGetDevices } from "app/hooks/useGetDevices";
 
 const DevicePage: NextPage = () => {
-  const { data } = useDevice();
+  const { data } = useGetDevices();
 
   function RenderDeviceList(): ReactElement | null {
     if (!data) {
