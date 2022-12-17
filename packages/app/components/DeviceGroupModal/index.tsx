@@ -22,6 +22,7 @@ export default function DeviceGroupModal({
   const [enabledDeviceList, setEnabledDeviceList] = useState<string[]>(
     currentGroup.devices
   );
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   function isDeviceInGroup(
     groupDevices: string[],
@@ -32,17 +33,13 @@ export default function DeviceGroupModal({
 
   function handleToggleOnChange(deviceId: string, state: boolean): void {
     setEnabledDeviceList((prevState) => {
-      if (prevState.includes(deviceId) && state) {
+      if (state) {
         prevState.push(deviceId);
       }
 
-      if (prevState.includes(deviceId) && !state) {
-        return prevState.filter((item) => {
-          return item !== deviceId;
-        });
+      if (!state) {
+        prevState.splice(prevState.indexOf(deviceId), 1);
       }
-
-      console.log("fallback", prevState.includes(deviceId), state);
 
       return prevState;
     });
@@ -75,11 +72,13 @@ export default function DeviceGroupModal({
       description="Control multiple devices as one"
       isOpen={openModal}
       onSave={() => {
-        onSave(currentGroup._id, enabledDeviceList);
+        setIsSaving(true);
+        // onSave(currentGroup._id, enabledDeviceList);
       }}
       onClose={() => {
         onClose();
       }}
+      isSaving={isSaving}
     >
       <RenderDeviceList />
     </ModalWrapper>
