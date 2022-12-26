@@ -9,4 +9,11 @@ export class GroupsService {
   async getAllGroups(): Promise<GroupSchema[]> {
     return await this.group.getAll();
   }
+
+  async updateGroupDevices(
+    groupId: string,
+    deviceList: string[],
+  ): Promise<void> {
+    await this.group.updateDeviceList(groupId, deviceList);
+  }
 }

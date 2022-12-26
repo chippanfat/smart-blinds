@@ -3,8 +3,10 @@ import ModalWrapper from "app/components/ModalWrapper";
 import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
 import Toggle from "app/components/Toggle";
+import { useUpdateGroupDevice } from "app/hooks/useUpdateGroupDevice";
 import { Device as DeviceInterface } from "app/types/Device.interface";
 import { Group as GroupInterface } from "app/types/Group.interface";
+import { UpdateGroupDeviceList } from "app/types/UpdateGroupDeviceList.type";
 
 export default function DeviceGroupModal({
   openModal,
@@ -23,6 +25,8 @@ export default function DeviceGroupModal({
     currentGroup.devices
   );
   const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  const { trigger } = useUpdateGroupDevice(currentGroup._id);
 
   function isDeviceInGroup(
     groupDevices: string[],
@@ -73,7 +77,14 @@ export default function DeviceGroupModal({
       isOpen={openModal}
       onSave={() => {
         setIsSaving(true);
-        // onSave(currentGroup._id, enabledDeviceList);
+
+        trigger({
+          body: { deviceList: enabledDeviceList },
+          method: "PATCH",
+        }).then((result) => {
+          setIsSaving(false);
+          onSave(currentGroup._id, enabledDeviceList);
+        });
       }}
       onClose={() => {
         onClose();

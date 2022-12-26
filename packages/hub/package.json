@@ -35,6 +35,8 @@
     "@nestjs/schedule": "^2.1.0",
     "@nestjs/testing": "^9.1.2",
     "@types/cron": "^2.0.0",
+    "class-validator": "^0.14.0",
+    "cookie-parser": "^1.4.6",
     "dayjs": "^1.11.5",
     "jwks-rsa": "^3.0.0",
     "mongoose": "^6.5.0",

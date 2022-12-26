@@ -8,7 +8,6 @@ export class SettingsController {
 
   @Get()
   async index(): Promise<SettingsSchema[]> {
-    debugger;
     await this.settingsService.executeSetting(0, []);
     return await this.settingsService.getAllSettings();
   }

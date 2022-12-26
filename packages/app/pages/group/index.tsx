@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import React, { useState, ReactElement } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
