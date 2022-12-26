@@ -5,7 +5,7 @@ import UpdateDeviceListDto from 'src/groups/dto/UpdateDeviceListDto';
 
 @Controller('groups')
 export class GroupsController {
-  private readonly logger: Logger = new Logger();
+  private readonly logger: Logger = new Logger(GroupsController.name);
 
   constructor(private readonly groupsService: GroupsService) {}
   @Get('/')

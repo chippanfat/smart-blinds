@@ -54,4 +54,8 @@ export class SettingsService {
   async getAllSettings(): Promise<SettingsSchema[]> {
     return await this.settingsDao.getAllSettings();
   }
+
+  async updateSettingState(id: string, state: boolean): Promise<void> {
+    await this.settingsDao.updateState(id, state);
+  }
 }
