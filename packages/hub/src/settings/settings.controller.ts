@@ -18,8 +18,10 @@ export class SettingsController {
   async update(
     @Param() params: { settingId: string },
     @Body() body: UpdateSettingState,
-  ): Promise<void> {
+  ): Promise<Record<string, unknown>> {
     this.logger.debug('Update setting state', { params, body });
     await this.settingsService.updateSettingState(params.settingId, body.state);
+
+    return {};
   }
 }

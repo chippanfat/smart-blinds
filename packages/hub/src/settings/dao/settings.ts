@@ -22,6 +22,6 @@ export default class Settings implements DaoInterface {
   }
 
   async updateState(id: string, state: boolean): Promise<void> {
-    this.settingsModel.findOneAndUpdate({ _id: id }, { enabled: state });
+    await this.settingsModel.findOneAndUpdate({ _id: id }, { enabled: state });
   }
 }

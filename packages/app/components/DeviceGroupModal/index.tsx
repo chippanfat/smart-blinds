@@ -6,7 +6,6 @@ import Toggle from "app/components/Toggle";
 import { useUpdateGroupDevice } from "app/hooks/useUpdateGroupDevice";
 import { Device as DeviceInterface } from "app/types/Device.interface";
 import { Group as GroupInterface } from "app/types/Group.interface";
-import { UpdateGroupDeviceList } from "app/types/UpdateGroupDeviceList.type";
 
 export default function DeviceGroupModal({
   openModal,

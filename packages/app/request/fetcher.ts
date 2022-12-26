@@ -37,7 +37,6 @@ export function postFetcher(
   url: string,
   init: { arg: { body: Record<string, string>; method: string } }
 ) {
-  debugger;
   const config = {
     ...getBaseHeaders(getToken()),
     method: init.arg.method,
