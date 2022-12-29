@@ -1,5 +1,6 @@
-import { Controller, Get, Patch } from '@nestjs/common';
+import { Controller, Get, Inject, Patch } from '@nestjs/common';
 import { ControlService } from 'src/control/control.service';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('control')
 export class ControlController {

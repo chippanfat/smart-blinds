@@ -1,9 +1,16 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import Device from 'src/control/dao/device';
 import InvalidDeviceException from './errors/InvalidDeviceException';
 import { Device as ControlDevice } from 'src/control/schemas/device.schema';
 import { Group as ControlGroup } from 'src/groups/schemas/group.schema';
-import { HttpService } from '@nestjs/axios';
+import { ClientProxy } from '@nestjs/microservices';
+import { Clients } from 'src/types/clientsModule.enum';
 
 @Injectable()
 export class ControlService {
@@ -11,7 +18,7 @@ export class ControlService {
 
   constructor(
     private readonly deviceDao: Device,
-    private readonly httpService: HttpService,
+    @Inject(Clients.HubQueue) private client: ClientProxy,
   ) {}
 
   private async sendDeviceTrigger(
@@ -19,11 +26,7 @@ export class ControlService {
     state: boolean,
   ): Promise<void> {
     this.logger.log('Do device request', { address: hardwareAddress, state });
-    const response = await this.httpService.get(
-      `${hardwareAddress}?state=${state}`,
-    );
-
-    this.logger.log('device response', { response });
+    this.client.send('state', { address: hardwareAddress, state }).subscribe();
   }
 
   public async getAllDevices(): Promise<ControlDevice[]> {

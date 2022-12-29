@@ -8,10 +8,12 @@ import { ControlService } from 'src/control/control.service';
 import DeviceDao from 'src/control/dao/device';
 import { DeviceSchema } from 'src/control/schemas/device.schema';
 import { GroupSchema } from 'src/groups/schemas/group.schema';
+import { ControlModule } from 'src/control/control.module';
 
 @Module({
   imports: [
     HttpModule,
+    ControlModule,
     MongooseModule.forFeature([
       { name: 'devices', schema: DeviceSchema },
       { name: 'groups', schema: GroupSchema },

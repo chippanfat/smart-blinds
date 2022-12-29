@@ -7,7 +7,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { SchedulerModule } from 'src/scheduler/scheduler.module';
 import { SettingsModule } from 'src/settings/settings.module';
 import { ConfigModule } from 'src/config/config.module';
-import { GroupsModule } from './groups/groups.module';
+import { GroupsModule } from 'src/groups/groups.module';
 
 @Module({
   imports: [
