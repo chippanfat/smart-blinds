@@ -26,7 +26,9 @@ export class ControlService {
     state: boolean,
   ): Promise<void> {
     this.logger.log('Do device request', { address: hardwareAddress, state });
-    this.client.send('state', { address: hardwareAddress, state }).subscribe();
+    await this.client
+      .send('state', { address: hardwareAddress, state })
+      .subscribe();
   }
 
   public async getAllDevices(): Promise<ControlDevice[]> {
@@ -52,8 +54,8 @@ export class ControlService {
     }
   }
 
-  async changeState(name: string, state: boolean): Promise<void> {
-    await this.changeDeviceState(await this.deviceDao.getByName(name), state);
+  async changeState(id: string, state: boolean): Promise<void> {
+    await this.changeDeviceState(await this.deviceDao.getById(id), state);
   }
 
   async changeGroupState(name: string, state: boolean): Promise<void> {

@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 
-export default function Device({
+export default function Toggle({
   id,
   state,
   onChange,

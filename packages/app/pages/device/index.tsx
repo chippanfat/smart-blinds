@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
-import Toggle from "app/components/Toggle";
+import DeviceToggle from "app/components/DeviceToggle";
 import PageTitle from "app/components/PageTitle";
 import { useGetDevices } from "app/hooks/useGetDevices";
 
@@ -21,15 +21,7 @@ const DevicePage: NextPage = () => {
           <Device
             key={device._id}
             label={device.name}
-            action={
-              <Toggle
-                id={device._id}
-                state={device.state}
-                onChange={() => {
-                  console.log("clicky");
-                }}
-              />
-            }
+            action={<DeviceToggle id={device._id} state={device.state} />}
           />
         </DeviceListWrapper>
       );
