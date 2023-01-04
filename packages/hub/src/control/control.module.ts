@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from 'src/config/config.module';
 import { ControlController } from 'src/control/control.controller';
 import { ControlService } from 'src/control/control.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -11,6 +12,7 @@ import { Clients } from 'src/types/clientsModule.enum';
 
 @Module({
   imports: [
+    ConfigModule,
     ClientsModule.register([
       {
         name: Clients.HubQueue,

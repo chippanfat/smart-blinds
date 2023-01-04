@@ -46,5 +46,7 @@ export function postFetcher(
   return fetch(
     GATEWAY_URL.concat(url),
     Object.assign({ ...config }, init)
-  ).then((res) => res.json());
+  ).then((res) => {
+    return res.bodyUsed ? res.json() : undefined;
+  });
 }

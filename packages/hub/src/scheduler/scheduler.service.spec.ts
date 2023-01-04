@@ -3,7 +3,7 @@ import { SchedulerService } from 'src/scheduler/scheduler.service';
 import SchedulerDao from 'src/scheduler/dao/scheduler';
 import { Scheduler as SchedulerInterface } from 'src/scheduler/schemas/scheduler.schema';
 import { Device as DeviceInterface } from 'src/control/schemas/device.schema';
-import { Group as GroupInterface } from 'src/control/schemas/group.schema';
+import { Group as GroupInterface } from 'src/groups/schemas/group.schema';
 import { ControlService } from 'src/control/control.service';
 import mongoose from 'mongoose';
 import dayjs from 'dayjs';

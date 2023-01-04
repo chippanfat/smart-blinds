@@ -11,6 +11,7 @@ import { GroupsModule } from 'src/groups/groups.module';
 
 @Module({
   imports: [
+    ConfigModule,
     MongooseModule.forRoot(
       `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,
       {
@@ -23,7 +24,6 @@ import { GroupsModule } from 'src/groups/groups.module';
     ControlModule,
     SchedulerModule,
     SettingsModule,
-    ConfigModule,
     GroupsModule,
   ],
   controllers: [AppController],
