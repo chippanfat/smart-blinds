@@ -25,10 +25,17 @@ export class ControlService {
     hardwareAddress: string,
     state: boolean,
   ): Promise<void> {
-    this.logger.log('Do device request', { address: hardwareAddress, state });
-    await this.client
-      .send('state', { address: hardwareAddress, state })
-      .subscribe();
+    try {
+      await this.client
+        .send('state', { address: hardwareAddress, state })
+        .subscribe();
+
+      this.logger.log('Do device request', { address: hardwareAddress, state });
+    } catch (e) {
+      this.logger.error('Failed to add trigger onto queue', {
+        error: e.message,
+      });
+    }
   }
 
   public async getAllDevices(): Promise<ControlDevice[]> {
