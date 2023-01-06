@@ -1,11 +1,30 @@
+import { ReactElement } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
+import SettingItem from "app/components/SettingItem";
 import Toggle from "app/components/Toggle";
 import PageTitle from "app/components/PageTitle";
+import { useGetSettings } from "app/hooks/useGetSettings";
 
 const DevicePage: NextPage = () => {
+  const { data } = useGetSettings();
+
+  function RenderSettingList(): ReactElement | null {
+    if (!data) {
+      return <p>Loading...</p>;
+    }
+
+    return (
+      <>
+        {data.map((setting) => (
+          <SettingItem key={`setting-item-${setting._id}`} setting={setting} />
+        ))}
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -14,21 +33,7 @@ const DevicePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageTitle>Settings</PageTitle>
-      <DeviceListWrapper>
-        <Device
-          key="turnonatsunset"
-          label="Close at Sunset"
-          action={
-            <Toggle
-              id=""
-              state
-              onChange={() => {
-                console.log("vv");
-              }}
-            />
-          }
-        />
-      </DeviceListWrapper>
+      <RenderSettingList />
     </>
   );
 };

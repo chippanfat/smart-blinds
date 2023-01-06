@@ -1,11 +1,35 @@
+import { ReactElement } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
-import Toggle from "app/components/Toggle";
+import DeviceToggle from "app/components/DeviceToggle";
 import PageTitle from "app/components/PageTitle";
+import { useGetDevices } from "app/hooks/useGetDevices";
 
 const DevicePage: NextPage = () => {
+  const { data } = useGetDevices();
+
+  function RenderDeviceList(): ReactElement | null {
+    if (!data) {
+      return null;
+    }
+
+    const list = data.map((device) => {
+      return (
+        <DeviceListWrapper key={`devicelistwrapper-${device._id}`}>
+          <Device
+            key={device._id}
+            label={device.name}
+            action={<DeviceToggle id={device._id} state={device.state} />}
+          />
+        </DeviceListWrapper>
+      );
+    });
+
+    return <>{list}</>;
+  }
+
   return (
     <>
       <Head>
@@ -14,36 +38,8 @@ const DevicePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageTitle>Devices</PageTitle>
-      <DeviceListWrapper>
-        <Device
-          key="livingroom"
-          label="Living Room"
-          action={
-            <Toggle
-              id=""
-              state
-              onChange={() => {
-                console.log("vv");
-              }}
-            />
-          }
-        />
-      </DeviceListWrapper>
-      <DeviceListWrapper>
-        <Device
-          key="bedroom"
-          label="Bedroom"
-          action={
-            <Toggle
-              id=""
-              state
-              onChange={() => {
-                console.log("vv");
-              }}
-            />
-          }
-        />
-      </DeviceListWrapper>
+
+      <RenderDeviceList />
     </>
   );
 };

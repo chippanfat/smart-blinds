@@ -1,4 +1,4 @@
-import { Module, FactoryProvider } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SettingsService } from './settings.service';
 import { SettingsController } from './settings.controller';

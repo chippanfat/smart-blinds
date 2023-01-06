@@ -1,9 +1,16 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import Device from 'src/control/dao/device';
 import InvalidDeviceException from './errors/InvalidDeviceException';
 import { Device as ControlDevice } from 'src/control/schemas/device.schema';
-import { Group as ControlGroup } from 'src/control/schemas/group.schema';
-import { HttpService } from '@nestjs/axios';
+import { Group as ControlGroup } from 'src/groups/schemas/group.schema';
+import { ClientProxy } from '@nestjs/microservices';
+import { Clients } from 'src/types/clientsModule.enum';
 
 @Injectable()
 export class ControlService {
@@ -11,19 +18,28 @@ export class ControlService {
 
   constructor(
     private readonly deviceDao: Device,
-    private readonly httpService: HttpService,
+    @Inject(Clients.HubQueue) private client: ClientProxy,
   ) {}
 
   private async sendDeviceTrigger(
     hardwareAddress: string,
     state: boolean,
   ): Promise<void> {
-    this.logger.log('Do device request', { address: hardwareAddress, state });
-    const response = await this.httpService.get(
-      `${hardwareAddress}?state=${state}`,
-    );
+    try {
+      await this.client
+        .send('state', { address: hardwareAddress, state })
+        .subscribe();
 
-    this.logger.log('device response', { response });
+      this.logger.log('Do device request', { address: hardwareAddress, state });
+    } catch (e) {
+      this.logger.error('Failed to add trigger onto queue', {
+        error: e.message,
+      });
+    }
+  }
+
+  public async getAllDevices(): Promise<ControlDevice[]> {
+    return await this.deviceDao.getAllDevices();
   }
 
   public async changeDeviceState(
@@ -45,8 +61,8 @@ export class ControlService {
     }
   }
 
-  async changeState(name: string, state: boolean): Promise<void> {
-    await this.changeDeviceState(await this.deviceDao.getByName(name), state);
+  async changeState(id: string, state: boolean): Promise<void> {
+    await this.changeDeviceState(await this.deviceDao.getById(id), state);
   }
 
   async changeGroupState(name: string, state: boolean): Promise<void> {

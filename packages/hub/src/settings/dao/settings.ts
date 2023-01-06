@@ -20,4 +20,8 @@ export default class Settings implements DaoInterface {
 
     return settings;
   }
+
+  async updateState(id: string, state: boolean): Promise<void> {
+    await this.settingsModel.findOneAndUpdate({ _id: id }, { enabled: state });
+  }
 }
