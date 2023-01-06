@@ -1,5 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
-// import { ClientProxy } from '@nestjs/microservices';
+import { Injectable } from '@nestjs/common';
 import { Group } from 'src/groups/dao/group';
 import { Group as GroupSchema } from 'src/groups/schemas/group.schema';
 

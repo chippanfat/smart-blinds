@@ -6,7 +6,6 @@ import { Device as DeviceInterface } from 'src/control/schemas/device.schema';
 import { Group as GroupInterface } from 'src/groups/schemas/group.schema';
 import { ControlService } from 'src/control/control.service';
 import mongoose from 'mongoose';
-import dayjs from 'dayjs';
 import { Groups } from 'src/types/groups.enum';
 
 interface MockScheduleData extends SchedulerInterface {
@@ -67,6 +66,7 @@ describe('SchedulerService', () => {
   let service: SchedulerService;
 
   beforeEach(async () => {
+    // eslint-disable-next-line @next/next/no-assign-module-variable
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SchedulerService,

@@ -32,7 +32,7 @@ export class SchedulerService {
     const shouldRun = dayjs().diff(job.last, 'minutes') <= 0;
     const hasStarted = dayjs().diff(job.start, 'minutes') >= 0;
 
-    const { enabled, devices, when, state } = job;
+    const { enabled, devices, state } = job;
 
     if (!shouldRun || !hasStarted || !enabled) {
       this.logger.log('Job should not run', {
