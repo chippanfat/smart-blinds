@@ -19,5 +19,7 @@ jobs:
           node-version: '16.x'
       - run: npm install -g yarn
       - run: yarn
-      - run: npx oao bootstrap
-      - run: cd packages/hub && yarn build
+      - name: Bootstrap
+        run: npx oao bootstrap
+      - name: Build
+        run: cd packages/hub && yarn build
