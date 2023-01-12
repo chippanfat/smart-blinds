@@ -20,5 +20,4 @@ jobs:
       - run: npm install -g yarn
       - run: yarn
       - run: npx oao bootstrap
-      - run: cd packages/hub
-      - run: yarn build
+      - run: cd packages/hub && yarn build
