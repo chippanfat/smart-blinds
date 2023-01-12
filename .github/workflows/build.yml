@@ -40,7 +40,7 @@ jobs:
         env:
           cache-name: cache-hub-dist
         with:
-          path: packages/hub/dist
+          path: dist
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}
@@ -48,3 +48,5 @@ jobs:
             ${{ runner.os }}
       - name: ls the cache
         run: ls
+      - name: ls dist
+        run: ls dist
