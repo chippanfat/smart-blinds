@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -23,3 +21,14 @@ jobs:
         run: npx oao bootstrap
       - name: Build
         run: cd packages/hub && yarn build
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-hub-dist
+        with:
+          path: packages/hub/dist
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
