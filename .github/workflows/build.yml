@@ -40,4 +40,4 @@ jobs:
           context: ./packages/hub
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-json-endpoint.outputs.endpoint }}
+          tags: "ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-json-endpoint.outputs.endpoint }}"
