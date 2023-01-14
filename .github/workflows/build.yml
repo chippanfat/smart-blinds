@@ -38,6 +38,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./packages/hub
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: "ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}"
