@@ -9,46 +9,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      - run: npm install -g yarn
-      - run: yarn
-      - name: Bootstrap
-        run: npx oao bootstrap
-      - name: Build
-        run: cd packages/hub && yarn build
-      - name: Cache dist folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-hub-dist
-        with:
-          path: packages/hub/dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
-            ${{ runner.os }}-build
-            ${{ runner.os }}
+          node-version: '18.x'
 
-  build-image:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Cache dist folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-hub-dist
+      - name: Read package.json
+        uses: dutscher/read-package-json-endpoint-actions@v1.33.7
+        id: package-json-endpoint
+
+      - name: Show version number
+        run: echo "${{ steps.package-json-endpoint.outputs.endpoint }}"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          path: packages/hub/dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
-            ${{ runner.os }}-build
-            ${{ runner.os }}
-      - name: ls the cache
-        run: ls packages/hub/dist
-      - name: ls build
-        run: ls
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./packages/hub
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: smart-blinds/hub:${{ steps.package-json-endpoint.outputs.endpoint }}
