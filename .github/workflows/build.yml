@@ -40,4 +40,4 @@ jobs:
           context: ./packages/hub
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: smart-blinds/hub:${{ steps.package-json-endpoint.outputs.endpoint }}
+          tags: ${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-json-endpoint.outputs.endpoint }}
