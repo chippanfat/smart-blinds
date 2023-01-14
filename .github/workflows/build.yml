@@ -18,15 +18,15 @@ jobs:
 #      - name: Bootstrap
 #        run: yarn && npx oao bootstrap
 #
-#      - name: get-npm-version
-#        id: package-version
-#        uses: martinbeentjes/npm-get-version-action@main
-#        with:
-#          path: packages/hub
-#
-#      - name: Show version number
-#        run: echo "${{ steps.package-version.outputs.current-version }}"
-#
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+        with:
+          path: packages/hub
+
+      - name: Show version number
+        run: echo "${{ steps.package-version.outputs.current-version }}"
+
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v2
 #        with:
@@ -51,3 +51,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             echo ${{ secrets.GH_DOCKER_PACKAGES_READ }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            docker pull ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}"
