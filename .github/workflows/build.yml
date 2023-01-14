@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Bootstrap
+        run: yarn && npx oao bootstrap
+
       - name: Read package.json
         uses: dutscher/read-package-json-endpoint-actions@v1.33.7
         id: package-json-endpoint
