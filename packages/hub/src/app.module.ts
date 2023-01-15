@@ -13,11 +13,14 @@ import { GroupsModule } from 'src/groups/groups.module';
   imports: [
     ConfigModule,
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,
+      `mongodb+srv://${process.env.DB_USER}@${process.env.DB_HOST}`,
       {
-        dbName: process.env.DB_DATABASE,
-        user: process.env.DB_USERNAME,
-        pass: process.env.DB_PASSWORD,
+        dbName: process.env.DB_NAME,
+        ssl: true,
+        sslValidate: true,
+        sslKey: `${__dirname}/X509-cert.pem`,
+        sslCert: `${__dirname}/X509-cert.pem`,
+        authMechanism: 'MONGODB-X509',
       },
     ),
     ScheduleModule.forRoot(),
