@@ -37,7 +37,10 @@ jobs:
           file_name: .env
 
       - name: Add database certificate to build directory
-        run: cat ${{ secrets.MONGODB_PRIVATE_KEY }} >> packages/hub/X509-cert.pem
+        run: 'echo "$MONGO_KEY" > packages/hub/X509-cert.pem'
+        shell: bash
+        env:
+          MONGO_KEY: ${{secrets.MONGODB_PRIVATE_KEY}}
 
       - name: 'ls'
         run: ls packages/hub
