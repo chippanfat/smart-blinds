@@ -19,6 +19,8 @@ WORKDIR /var/www/hub
 COPY --from=development /var/www/hub/dist /var/www/hub
 COPY --from=development /var/www/hub/node_modules /var/www/hub/node_modules
 
+COPY X509-cert.pem /var/www/hub
+
 EXPOSE 3000
 
 CMD ["node", "main.js"]
