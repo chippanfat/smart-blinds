@@ -70,7 +70,7 @@ jobs:
           push: true
           tags: "ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}"
 
-      - name: multiple command
+      - name: SSH Deploy
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -82,4 +82,5 @@ jobs:
             docker pull ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}
             docker stop hub && docker rm hub
             docker run --network=smartblinds --env-file .env -d -p 3001:3001 --name hub ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}
+            docker restart webserver
             rm .env
