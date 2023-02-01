@@ -1,11 +1,26 @@
 const configuration = () => ({
+  nodeEnv: process.env.NODE_ENV || 'development',
   clerk: { apiKey: process.env.CLERK_API_KEY },
   database: {
-    database: process.env.DB_DATABASE,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-    host: process.env.DB_HOST,
+    name: process.env.DB_DATABASE,
+    uri: process.env.DB_URI,
+
+    auth: {
+      user: process.env.DB_USERNAME,
+      pass: process.env.DB_PASSWORD,
+    },
+
+    certs: {
+      ssl: true,
+      sslValidate: true,
+      sslKey: 'X509-cert.pem',
+      sslCert: 'X509-cert.pem',
+      authMechanism: 'MONGODB-X509',
+    },
+  },
+  queue: {
+    url: process.env.HUB_QUEUE_URL,
+    name: process.env.HUB_QUEUE_NAME,
   },
 });
 
