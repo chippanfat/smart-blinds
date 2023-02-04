@@ -10,8 +10,12 @@ export class AppService {
     const { address, state } = data;
 
     this.logger.log('Do device request', { address, state });
-    const response = this.httpService.post(address, { address });
 
-    this.logger.log('device response', { response });
+    this.httpService.post(address, { state }).subscribe((response) => {
+      this.logger.log('device response', {
+        status: response.status,
+        text: response.statusText,
+      });
+    });
   }
 }

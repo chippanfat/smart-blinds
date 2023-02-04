@@ -8,13 +8,10 @@ import { Repeater } from '../types/repeater.type';
 import { Settings } from '../types/settings.enum';
 
 mongoose
-  .connect(`mongodb+srv://${process.env.DB_USER}@${process.env.DB_HOST}`, {
-    dbName: process.env.DB_NAME,
-    ssl: true,
-    sslValidate: true,
-    sslKey: `${__dirname}/X509-cert.pem`,
-    sslCert: `${__dirname}/X509-cert.pem`,
-    authMechanism: 'MONGODB-X509',
+  .connect('mongodb://localhost:27017', {
+    dbName: 'smart',
+    user: 'root',
+    pass: 'example',
   })
   .then((mongoose) => {
     const DeviceModel = mongoose.model('devices', DeviceSchema);
