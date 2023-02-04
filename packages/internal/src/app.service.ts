@@ -10,7 +10,7 @@ export class AppService {
     const { address, state } = data;
 
     this.logger.log('Do device request', { address, state });
-    const response = await this.httpService.get(`${address}?state=${state}`);
+    const response = this.httpService.post(address, { address });
 
     this.logger.log('device response', { response });
   }
