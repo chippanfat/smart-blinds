@@ -1,23 +1,15 @@
 name: Node.js CI
 
 on:
-  pull_request:
-    branches: [ "master" ]
+  push:
+    tags:
+      - v*
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-#      - name: Use Node.js
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: '18.x'
-#
-#      - name: Bootstrap
-#        run: yarn && npx oao bootstrap
-#
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
@@ -34,6 +26,8 @@ jobs:
           envkey_CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
           envkey_DB_NAME: ${{ secrets.DB_NAME }}
           envkey_DB_URI: ${{ secrets.DB_URI }}
+          envkey_HUB_QUEUE_URL: ${{ secrets.HUB_QUEUE_URL }}
+          envkey_HUB_QUEUE_NAME: ${{ secrets.HUB_QUEUE_NAME }}
           file_name: .env
 
       - name: Add database certificate to build directory
@@ -70,7 +64,7 @@ jobs:
           push: true
           tags: "ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}"
 
-      - name: multiple command
+      - name: SSH Deploy
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -82,4 +76,5 @@ jobs:
             docker pull ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}
             docker stop hub && docker rm hub
             docker run --network=smartblinds --env-file .env -d -p 3001:3001 --name hub ghcr.io/${{ github.repository_owner }}/smart-blinds/hub:${{ steps.package-version.outputs.current-version }}
+            docker restart webserver
             rm .env
