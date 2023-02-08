@@ -24,7 +24,7 @@ jobs:
         with:
           envkey_NODE_ENV: production
           envkey_CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
-          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_DB_DATABASE: ${{ secrets.DB_DATABASE }}
           envkey_DB_URI: ${{ secrets.DB_URI }}
           envkey_HUB_QUEUE_URL: ${{ secrets.HUB_QUEUE_URL }}
           envkey_HUB_QUEUE_NAME: ${{ secrets.HUB_QUEUE_NAME }}
