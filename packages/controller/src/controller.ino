@@ -84,12 +84,12 @@ PostData parsePostData(String header) {
 }
 
 void handleMotorStatusChange(PostData data) {
-  Stepper myStepper(stepperRevolutions, 4, 5);
-  myStepper.setSpeed(1);
+  Stepper myStepper(stepperRevolutions, 12, 11, 10, 9);
+  myStepper.setSpeed(10);
   Serial.println(data.percentage);
-  myStepper.step(50);
-//  delay(500);
-//  myStepper.step(100);
+  myStepper.step(200);
+  delay(500);
+  myStepper.step(100);
 }
 
 void loop() {
