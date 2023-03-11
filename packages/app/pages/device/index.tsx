@@ -4,11 +4,14 @@ import Head from "next/head";
 import Device from "app/components/Device";
 import DeviceListWrapper from "app/components/DeviceListWrapper";
 import DeviceToggle from "app/components/DeviceToggle";
+import Card from "app/components/Card";
 import PageTitle from "app/components/PageTitle";
 import { useGetDevices } from "app/hooks/useGetDevices";
+import { useBroadcastDeviceList } from "app/hooks/useBroadcastDeviceList";
 
 const DevicePage: NextPage = () => {
   const { data } = useGetDevices();
+  const { trigger } = useBroadcastDeviceList();
 
   function RenderDeviceList(): ReactElement | null {
     if (!data) {
@@ -38,8 +41,14 @@ const DevicePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageTitle>Devices</PageTitle>
-
-      <RenderDeviceList />
+      <div className="lg:w-1/2 mx-auto">
+        <RenderDeviceList />
+        <Card
+          onSave={() => {
+            trigger({ method: "POST", body: {} });
+          }}
+        />
+      </div>
     </>
   );
 };
