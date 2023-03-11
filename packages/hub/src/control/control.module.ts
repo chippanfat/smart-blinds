@@ -5,32 +5,14 @@ import { ControlService } from 'src/control/control.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DeviceSchema } from 'src/control/schemas/device.schema';
 import { GroupSchema } from 'src/groups/schemas/group.schema';
-import { ConfigService } from '@nestjs/config';
 import Device from 'src/control/dao/device';
 import { HttpModule } from '@nestjs/axios';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { Clients } from 'src/types/clientsModule.enum';
+import { QueueModule } from 'src/queue/queue.module';
 
 @Module({
   imports: [
     ConfigModule,
-    ClientsModule.registerAsync([
-      {
-        inject: [ConfigService],
-        name: Clients.HubQueue,
-        useFactory: async (configService: ConfigService) => ({
-          name: Clients.HubQueue,
-          transport: Transport.RMQ,
-          options: {
-            urls: [configService.getOrThrow<string>('queue.url')],
-            queue: configService.getOrThrow<string>('queue.name'),
-            queueOptions: {
-              durable: false,
-            },
-          },
-        }),
-      },
-    ]),
+    QueueModule,
     MongooseModule.forFeature([
       { name: 'devices', schema: DeviceSchema },
       { name: 'groups', schema: GroupSchema },
@@ -38,7 +20,7 @@ import { Clients } from 'src/types/clientsModule.enum';
     HttpModule,
   ],
   controllers: [ControlController],
-  providers: [ClientsModule, ControlService, Device],
-  exports: [ClientsModule, Device],
+  providers: [QueueModule, ControlService, Device],
+  exports: [QueueModule, Device],
 })
 export class ControlModule {}
