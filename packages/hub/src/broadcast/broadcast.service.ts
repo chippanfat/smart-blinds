@@ -8,14 +8,10 @@ export class BroadcastService {
   constructor(@Inject(Clients.HubQueue) private client: ClientProxy) {}
   async sendBroadcastEvent() {
     try {
-      this.client.send('broadcast', { device: 'blinds' }).subscribe();
-      this.logger.log('Successfully sent broadcast message', {
-        device: 'blinds',
-      });
+      await this.client.send('broadcast', {}).subscribe();
+      this.logger.log('Send broadcast event');
     } catch (e) {
-      this.logger.error('Failed to send broadcast message', {
-        message: e.message,
-      });
+      this.logger.error('Failed broadcast message', { message: e.message });
     }
   }
 }
