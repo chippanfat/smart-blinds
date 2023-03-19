@@ -21,13 +21,27 @@ export class AppService {
   }
 
   async doBroadcast(): Promise<void> {
+    this.logger.log('Do socket broadcast');
+
     const socket = dgram.createSocket('udp4');
-    socket.bind(5555, () => {
+
+    socket.bind(8000, () => {
       socket.setBroadcast(true);
       const message = Buffer.from('yobruh');
 
-      socket.send(message, 0, message.length, 5555, '255.255.255.255');
-      this.logger.log('Socket broadcast sent');
+      socket.send(message, 0, message.length, 5555, '255.255.255.255', () => {
+        this.logger.log('Socket broadcast sent');
+      });
+
+      socket.on('message', (message, remote) => {
+        this.logger.log('on message', { message, remote });
+
+        setTimeout(() => {
+          socket.close(() => {
+            this.logger.log('Socket closed');
+          });
+        }, 10000);
+      });
     });
   }
 }
