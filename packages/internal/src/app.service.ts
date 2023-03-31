@@ -1,12 +1,17 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { HttpService } from '@nestjs/axios';
 import { IStateChange } from 'internal/types/stateChange.interface';
+import { Clients } from 'internal/types/clientsModule.enum';
 const dgram = require('dgram');
 
 @Injectable()
 export class AppService {
   private readonly logger: Logger = new Logger(AppService.name);
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    @Inject(Clients.AddressQueue) private client: ClientProxy,
+    private readonly httpService: HttpService,
+  ) {}
   async doDeviceRequest(data: IStateChange): Promise<void> {
     const { address, state } = data;
 
@@ -35,6 +40,12 @@ export class AppService {
 
       socket.on('message', (message, remote) => {
         this.logger.log('on message', { message, remote });
+
+        this.client
+          .send('address_update', { address: remote.address })
+          .subscribe((value) => {
+            this.logger.log('Device address update', { value });
+          });
 
         setTimeout(() => {
           socket.close(() => {
