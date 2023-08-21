@@ -41,7 +41,7 @@
     "cookie-parser": "^1.4.6",
     "dayjs": "^1.11.5",
     "jwks-rsa": "^3.0.0",
-    "mongoose": "^6.5.0",
+    "mongoose": "^6.11.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
