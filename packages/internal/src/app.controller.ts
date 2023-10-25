@@ -11,4 +11,9 @@ export class AppController {
   async handleStateChange(@Payload() data: IStateChange): Promise<void> {
     await this.appService.doDeviceRequest(data);
   }
+
+  @MessagePattern('broadcast')
+  async handleBroadcast(): Promise<void> {
+    await this.appService.doBroadcast();
+  }
 }

@@ -8,7 +8,7 @@ async function bootstrap() {
     options: {
       urls: process.env.HUB_QUEUE_URL,
       queue: process.env.HUB_QUEUE_NAME,
-      queueOptions: { durable: false },
+      queueOptions: { durable: true },
     },
   });
   await app.listen();
