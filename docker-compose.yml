@@ -1,10 +1,18 @@
 services:
-
   hub:
     container_name: smart-blind-hub
     restart: on-failure
     build:
       context: ./packages/hub
+    env_file:
+      - ./packages/hub/.env
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - mongo
+      - queue
+    networks:
+      - blinds
 
   mongo:
     container_name: smart-blind-mongo

@@ -9,7 +9,6 @@ import { SchedulerModule } from 'src/scheduler/scheduler.module';
 import { SettingsModule } from 'src/settings/settings.module';
 import { ConfigModule } from 'src/config/config.module';
 import { GroupsModule } from 'src/groups/groups.module';
-import { BroadcastModule } from 'src/broadcast/broadcast.module';
 import { QueueModule } from 'src/queue/queue.module';
 
 @Module({
@@ -54,7 +53,6 @@ import { QueueModule } from 'src/queue/queue.module';
     SchedulerModule,
     SettingsModule,
     GroupsModule,
-    BroadcastModule,
     QueueModule,
   ],
   controllers: [AppController],
