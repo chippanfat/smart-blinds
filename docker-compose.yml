@@ -11,7 +11,9 @@ services:
       # Override for Docker - use service names instead of localhost
       DB_HOST: mongo
       DB_URI: mongodb://root:example@mongo:27017
-      HUB_QUEUE_URL: amqp://root:example@queue:5672
+      HUB_QUEUE_URL: amqps://root:example@queue:5671
+    volumes:
+      - ./rabbitmq/certs/ca-cert.pem:/app/certs/ca-cert.pem:ro
     depends_on:
       - mongo
       - queue
@@ -38,13 +40,17 @@ services:
     image: rabbitmq:4.2.3-management-alpine
     restart: on-failure
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5672:5672"      # Non-TLS AMQP
+      - "5671:5671"      # TLS AMQP
+      - "15672:15672"    # Non-TLS Management
+      - "15671:15671"    # TLS Management
     environment:
       RABBITMQ_DEFAULT_USER: root
       RABBITMQ_DEFAULT_PASS: example
     volumes:
       - queue:/var/lib/rabbitmq
+      - ./rabbitmq/certs:/etc/rabbitmq/certs:ro
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
     networks:
       - blinds
 
