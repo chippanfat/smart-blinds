@@ -11,6 +11,7 @@ import { Device as ControlDevice } from 'src/control/schemas/device.schema';
 import { Group as ControlGroup } from 'src/groups/schemas/group.schema';
 import { ClientProxy } from '@nestjs/microservices';
 import { Clients } from 'src/types/clientsModule.enum';
+import { RabbitMQService } from 'src/rabbitmq/rabbitmq.service';
 
 @Injectable()
 export class ControlService {
@@ -18,24 +19,15 @@ export class ControlService {
 
   constructor(
     private readonly deviceDao: Device,
-    @Inject(Clients.HubQueue) private client: ClientProxy,
+    private readonly rabbitmqService: RabbitMQService,
   ) {}
 
   private async sendDeviceTrigger(
-    hardwareAddress: string,
+    deviceId: string,
     state: boolean,
   ): Promise<void> {
-    try {
-      await this.client
-        .send('state', { address: hardwareAddress, state })
-        .subscribe();
-
-      this.logger.log('Do device request', { address: hardwareAddress, state });
-    } catch (e) {
-      this.logger.error('Failed to add trigger onto queue', {
-        error: e.message,
-      });
-    }
+    await this.rabbitmqService.ensureDeviceQueue(deviceId);
+    this.rabbitmqService.publishToDevice(deviceId, state);
   }
 
   public async getAllDevices(): Promise<ControlDevice[]> {
@@ -46,11 +38,15 @@ export class ControlService {
     device: ControlDevice,
     state: boolean,
   ): Promise<void> {
+    if (!device._id?.toString()) {
+      throw new InvalidDeviceException();
+    }
     try {
       // condition avoids triggering the =hardware if the state hasn't changed
       if (device.state !== state) {
         await this.deviceDao.updateDeviceState(device.name, state);
-        await this.sendDeviceTrigger(device.address, state);
+        await this.sendDeviceTrigger(device._id?.toString(), state);
+        // await this.rabbitmqService.publishToDevice(device.name, { state });
       }
     } catch (e) {
       if (e instanceof InvalidDeviceException) {

@@ -8,6 +8,10 @@ services:
       - ./packages/hub/.env
     environment:
       NODE_ENV: development
+      # Override for Docker - use service names instead of localhost
+      DB_HOST: mongo
+      DB_URI: mongodb://root:example@mongo:27017
+      HUB_QUEUE_URL: amqp://root:example@queue:5672
     depends_on:
       - mongo
       - queue
@@ -31,7 +35,7 @@ services:
 
   queue:
     container_name: smart-blind-queue
-    image: rabbitmq:3.11.1-management-alpine
+    image: rabbitmq:4.2.3-management-alpine
     restart: on-failure
     ports:
       - "5672:5672"

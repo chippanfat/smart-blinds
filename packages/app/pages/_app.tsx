@@ -25,10 +25,12 @@ function MyApp({ Component, pageProps }: AppProps) {
               GATEWAY_URL.concat(resource),
               Object.assign(
                 {
+                  credentials: 'include' as RequestCredentials,
                   headers: {
                     Authorization: `Bearer ${sessionCookie}`,
                     "x-forwarded-host": "localhost",
                     "x-forwarded-port": "3000",
+                    "Content-Type": "application/json",
                   },
                 },
                 init
