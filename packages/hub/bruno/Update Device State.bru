@@ -1,0 +1,26 @@
+meta {
+  name: Update Device State
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{url}}/control/device/:deviceId
+  body: json
+  auth: inherit
+}
+
+params:path {
+  deviceId: 6788268a21c4f5f090ce38d6
+}
+
+body:json {
+  {
+    "state": "true"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
