@@ -25,7 +25,7 @@ function getBaseHeaders(sessionCookie: string): any {
 }
 
 export function fetcher<K>(url: string, init: {}) {
-  const config = { ...getBaseHeaders(getToken()) };
+  const config = { ...getBaseHeaders(getToken()), credentials: 'include' as RequestCredentials };
 
   return fetch(
     GATEWAY_URL.concat(url),
@@ -39,6 +39,7 @@ export function postFetcher(
 ) {
   const config = {
     ...getBaseHeaders(getToken()),
+    credentials: 'include' as RequestCredentials,
     method: init.arg.method,
     body: JSON.stringify(init.arg.body),
   };

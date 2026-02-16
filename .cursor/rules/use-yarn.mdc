@@ -1,0 +1,43 @@
+---
+description: Use yarn instead of npm for package management
+alwaysApply: true
+---
+
+# Package Manager: Use Yarn
+
+This project uses **yarn** as the package manager. Always use `yarn` commands instead of `npm`.
+
+## Common Commands
+
+```bash
+# ❌ WRONG
+npm install
+npm install <package>
+npm run <script>
+npm test
+npm ci
+
+# ✅ CORRECT
+yarn install
+yarn add <package>
+yarn <script>
+yarn test
+yarn install --frozen-lockfile
+```
+
+## Development Dependencies
+
+```bash
+# ❌ WRONG
+npm install --save-dev <package>
+
+# ✅ CORRECT
+yarn add -D <package>
+```
+
+## Key Points
+
+- Use `yarn.lock` (never `package-lock.json`)
+- Run `yarn install` after pulling changes
+- Use `yarn add` to add new dependencies
+- Use `yarn add -D` for dev dependencies

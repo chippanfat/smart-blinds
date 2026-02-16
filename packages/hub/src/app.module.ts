@@ -9,7 +9,7 @@ import { SchedulerModule } from 'src/scheduler/scheduler.module';
 import { SettingsModule } from 'src/settings/settings.module';
 import { ConfigModule } from 'src/config/config.module';
 import { GroupsModule } from 'src/groups/groups.module';
-import { QueueModule } from 'src/queue/queue.module';
+import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 
 @Module({
   imports: [
@@ -53,7 +53,7 @@ import { QueueModule } from 'src/queue/queue.module';
     SchedulerModule,
     SettingsModule,
     GroupsModule,
-    QueueModule,
+    RabbitMQModule,
   ],
   controllers: [AppController],
   providers: [AppService],
